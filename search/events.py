@@ -1,0 +1,40 @@
+# search/events.py
+# -*- coding: utf-8 -*-
+
+"""
+Mining 编排事件类型。
+
+Step 10c 新增：
+    AI_REFINE_STARTED   — LLM 开始修复一条 CANDIDATE
+    AI_REFINE_SUCCEEDED — 修复后回测成功（无论是否 PASS）
+    AI_REFINE_FAILED    — LLM 调用失败 / 输出非法
+    AI_REFINE_EXHAUSTED — 达到重试上限，熔断
+"""
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class EventType(str, Enum):
+    # 生命周期
+    PROGRAM_STARTED    = "PROGRAM_STARTED"
+    GENERATION_STARTED = "GENERATION_STARTED"
+    GENERATION_COMPLETED = "GENERATION_COMPLETED"
+    MINING_COMPLETED   = "MINING_COMPLETED"
+    MINING_FAILED      = "MINING_FAILED"
+
+    # 单条 Alpha
+    CANDIDATE_FOUND    = "CANDIDATE_FOUND"
+    STRONG_ALPHA_FOUND = "STRONG_ALPHA_FOUND"
+    FINAL_ALPHA_FOUND  = "FINAL_ALPHA_FOUND"
+    BEST_ALPHA_UPDATED = "BEST_ALPHA_UPDATED"
+
+    # 异常
+    SIMULATION_ERROR   = "SIMULATION_ERROR"
+
+    # Step 10c：AI 修复事件
+    AI_REFINE_STARTED   = "AI_REFINE_STARTED"
+    AI_REFINE_SUCCEEDED = "AI_REFINE_SUCCEEDED"
+    AI_REFINE_FAILED    = "AI_REFINE_FAILED"
+    AI_REFINE_EXHAUSTED = "AI_REFINE_EXHAUSTED"
